@@ -16,6 +16,8 @@ int main(){
     nums[0] = 100;
     cout << *x << endl;
 
+    int& y = *x;
+    cout << y << endl;
 
     //cout << *it << endl;
 
