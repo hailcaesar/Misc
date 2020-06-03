@@ -1,0 +1,66 @@
+{
+ "options": [
+  [
+   "date:fPIC",
+   "True"
+  ],
+  [
+   "date:shared",
+   "False"
+  ],
+  [
+   "date:use_system_tz_db",
+   "True"
+  ],
+  [
+   "date:use_tz_db_in_dot",
+   "False"
+  ],
+  [
+   "google-benchmark:exceptions",
+   "True"
+  ],
+  [
+   "google-benchmark:fPIC",
+   "True"
+  ],
+  [
+   "google-benchmark:lto",
+   "False"
+  ],
+  [
+   "google-benchmark:shared",
+   "False"
+  ],
+  [
+   "libpng:api_prefix",
+   "None"
+  ],
+  [
+   "libpng:fPIC",
+   "True"
+  ],
+  [
+   "libpng:shared",
+   "False"
+  ],
+  [
+   "zlib:fPIC",
+   "True"
+  ],
+  [
+   "zlib:minizip",
+   "False"
+  ],
+  [
+   "zlib:shared",
+   "False"
+  ]
+ ],
+ "root": {
+  "name": null,
+  "version": null,
+  "user": null,
+  "channel": null
+ }
+}

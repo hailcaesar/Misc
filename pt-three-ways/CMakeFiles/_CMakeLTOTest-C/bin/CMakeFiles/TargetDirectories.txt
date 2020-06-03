@@ -1,0 +1,4 @@
+/Users/sebastianx/Testing/C++/Misc/pt-three-ways/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/rebuild_cache.dir
+/Users/sebastianx/Testing/C++/Misc/pt-three-ways/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/edit_cache.dir
+/Users/sebastianx/Testing/C++/Misc/pt-three-ways/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir
+/Users/sebastianx/Testing/C++/Misc/pt-three-ways/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir

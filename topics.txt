@@ -1,0 +1,234 @@
+1. virtual memory
+    Virtual memory not only keeps processes safe (because one process cannot directly read or modify another process's memory)
+    it also allows the system to efficiently allocate and re-allocate portions of memory to different processes.
+    Virtual maps memory addresses used by a program, called virtual addresses, into physical addresses in computer memory.
+    Swap infrequenty data into mememory on disk.
+
+   TLB = Translation Lookaside Buffer. used to map virtual address to physical address quickly
+   In a cached system, the base addresses of the last few referenced pages is maintained in registers called the TLB that aids in faster lookup.
+   TLB contains those page-table entries that have been most recently used.
+   Normally, each virtual memory reference causes 2 physical memory accesses- one to fetch appropriate page-table entry, and one to fetch the desired data.
+   Using TLB in-between, this is reduced to just one physical memory access in cases of TLB-hit.
+
+   Resident Set is the portion of memory occupied by a process that is held in main memory (RAM). The rest of the occupied memory exists in the swap space or file system, either because some parts of the occupied memory were paged out, or because some parts of the executable were never loaded
+   Thrashing
+   when the required page is not in resident set, OS has to access virtual memory or disk. The computer spends an unsuitably large amount of time transferring pages to and from a backing store, hence slowing down useful work.
+
+2. write-through v.s. write-back cache
+   write-through: write cache and memory both;
+   write-back: initially, writing is done only to the cache. The write to the backing store is postponed until the cache blocks containing the data are about to be modified/replaced by new content.
+
+3. process v.s. thread
+    (1) Definition:  a process is an instance of a computer program that is being executed. A process contains one or more threads.
+                     a thread is the smallest sequence of programmed instructions that can be managed independently by a scheduler
+    (2) Difference: Process runs in separate memory spaces, and threads run in shared memory spaces;
+                    Process has independent address space and is independent on other processes
+                    Thread switch is light-weight compared with process switch
+                    Processes provide better isolation between actions
+    (3)context switch:
+                    process switch: when you change virtual memory spaces, the processor's Translation Lookaside Buffer (TLB) or equivalent gets flushed making memory accesses much more expensive for a while.
+                                    It requires saving all of the state of the currently executing program, including its register state, associated kernel state, and all of its virtual memory configuration
+                    thread switch: less context you need to save/load. Specifically, memory is shared. The kernel doesn't have to do any page outs of dirty pages
+    (4)process creation:
+                <>Load code and data into memory.
+                <>Create and initialize process control block.
+                <>Create first thread with call stack.
+                <>Provide initial values for "saved state" for the thread
+                <>Make process known to dispatcher; dispatcher "resumes" to beginning of process.
+
+4. Dispather
+    The dispatcher is inner-most portion of the OS that runs processes:
+
+5. RAID
+    Redundant Array of Inexpensive (or Independent) Disks is a data storage virtualization technology that combines multiple physical disk drive components into one or more logical units for the purposes of data redundancy, performance improvement, or both.
+    There were five RAID levels: RAID1, RAID2, RAID3, RAID4, RAID5
+
+
+6. Implement HashMap, put，get and remove  (multithreads access using lock slicing ＋ CAS)
+
+7.  IPC，ITC   IPC = Inter-Process Communication,  ITC = Inter-Thread Communication
+    A process cannot access memory inside another process. Processes can communicate by:
+    (1) Network packeges
+    (2) Files
+    (3) Pipes
+    (4) Shared memory
+    (5) Semaphores
+    (6) Corba messages (Java)
+    (7) RPC calls
+
+    Threads can communicate by accessing the memory in the same processes. For programmers, use wait(), notify() and notifyAll() for communication.
+    (1) wait(), notify(), notifyAll() are used together with synchronized;
+    (2) cond.await(), cond.signal(), cond.signalAll() are used together with lock;
+    (3) BlockingQueue (producer and consumer). Two methods: put(E, e), take(), if queue is full or empty, block the thread
+
+    线程唤醒后从哪儿执行？ 注意：实际情况是，被唤醒并且被执行的线程是从上次阻塞的位置从下开始运行，也就是从wait()方法后开始执行。
+
+    所以判断是否进入某一线程的条件 是用while判断，而不是用If判断判断。
+
+
+8.  Exception
+    Why use exception in Java (benefits)?
+      (1) Separating Error-Handling Code from "Regular" Code
+      (2) Propagating Errors Up the Call Stack
+      (3) Grouping and Differentiating Error Types
+    Runtime Exceptions:
+          They usually happen due to programmers fault. For example,
+          if an ArithmeticException of division by zero occurs or an ArrayIndexOutOfBoundsExceptionoccurs,
+          it is because we are not careful enough in our coding. They happen usually because some errors in our program logic.
+          So, they must be cleared before our program enters into production mode. They are unchecked in the sense that,
+          our program must fail when it occurs, so that we programmers can resolve it at the time of development and testing itself.
+
+    Errors:
+          Errors are situations from which usually the program cannot recover.
+          For example, if a StackOverflowError occurs, our program cannot do much,
+          such as increase the size of program's function calling stack. Or if an OutOfMemoryError occurs,
+          we cannot do much to increase the amount of RAM available to our program.
+          In such cases, it is better to exit the program. That is why
+
+
+
+9. DeadLock: (1) mutual exclusion, (2) hold and wait, (3) no preemption, (4) Circular wait
+          avoid deadlock:  make sure access critical section in the same order; introduce preemption
+
+10. At-least once  v.s. Exactly once
+
+11. SQL v.s. NoSql
+    SQL databases represent data in form of tables; NoSql databases are the collection of key-value pair, documents, graph databases or wide-column stores which do not have standard schema
+    NoSql may not require fixed table schemas, usually avoid join operations, and typically scale horizontally. Academic researchers typically refer to these databases as structured storage,
+    SQL databases have predefined schema whereas NoSQL databases have dynamic schema for unstructured data.
+    SQL databases are vertically scalable whereas the NoSQL databases are horizontally scalable.
+
+12. Java Synchronization
+    (1) use synchronized monitor / synchronized method
+        synchronized(object){
+            // code block
+        }
+        public synchronized void update(){  // synchronized method
+        }
+    (2) use synchronized lock
+        private final ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try{
+            // code ...
+        }finally{
+            lock.unlock();
+        }
+
+
+13. TCP vs UDP
+    Http uses TCP, DNS uses UDP;  TCP reliable, connetion; UDP is connectionless.
+    TCP has re-transmission mechanism, Flow-control and Congestion control;
+    TCP has more overhead when using three-way handshake to establish or close the connection;
+    UDP light-weight and high efficient but not reliable.
+    TCP is used if the size of the packet goes over 512 bytes.
+
+14. Page and Segmentation
+    a page is a fixed-sized block whereas, a segment is a variable-sized block;
+    Paging may lead to internal fragmentation; Segmentation may lead to external fragmentation.
+    The hardware decides the page size; The segment size is specified by the user;
+    refer to http://techdifferences.com/difference-between-paging-and-segmentation-in-os.html
+
+15. Gateway
+    Gateway is a passage to connect two networks together that may work upon different networking models.
+    They basically works as the messenger agents that take data from one system, interpret it, and transfer it to another system.
+    Gateways are also called protocol converters and can operate at any network layer.
+    Gateways are generally more complex than switch or router.
+
+16. Create threads in Java: extends thread class or implement Runnable interface?
+    (1) If we extend the Thread class, our class cannot extend any other class because Java doesn’t support multiple inheritance.
+    But, if we implement the Runnable interface, our class can still extend other base classes.
+    (2) We can achieve basic functionality of a thread by extending Thread class because it provides some inbuilt methods like yield(),
+    interrupt() etc. that are not available in Runnable interface.
+
+17. REST API
+    Representational state transfer API. Representation of resource such as JSON,XML,HTML,SOAP format
+    State is, for example, the webpage on website. If direct to another page on same website, the state changes.
+    verb + URL (GET, PUT, POST, DELETE)
+    REST API = Rest API endpoint URL + API method + parameters
+    refer to https://www.youtube.com/watch?v=LooL6_chvN4
+
+18. Transaction
+    Transactions group a set of tasks into a single execution unit.
+    Incomplete steps result in the failure of the transaction. A database transaction, by definition, must be atomic, consistent, isolated and durable.
+
+19. Hadoop / MapReduce / Pig
+19. JavaBean
+    A JavaBean is just a standard:
+        <1> All properties private (use getters/setters)
+        <2> A public no-argument constructor
+        <3> Implements Serializable. (java.io.Serializable interface)
+    JavaBean is just a convention. Lots of libraries depend on it.
+
+20. MBeans = Managed Beans
+    (1)An MBean is a managed Java object, similar to a JavaBeans component, that follows
+    the design patterns set forth in the JMX specification.
+    (2) An MBean can represent a device, an application, or any resource that needs to be managed.
+
+21. Java Native Interface(JNI): enables Java code running in a JVM to call and be called by native applications
+                                 (programs specific to a hardware and operating system platform) and
+                                 libraries written in other languages such as C, C++ and assembly.
+    Java Native Access(JNA): provides Java programs easy access to native shared libraries without writing anything but Java code.
+                             No JNI or native code is required. JNA allows you to call directly into native functions using natural Java method invocation.
+
+
+22. TCP Flags:
+        SYN - Initiates a connection
+        ACK - Acknowledges received data
+        FIN - Closes a connection
+        RST - Aborts a connection in response to an error
+        PSH - Means Push, two goals:
+                The sending application informs TCP that data should be sent immediately.
+                The PSH flag in the TCP header informs the receiving host that the data should be pushed up to the receiving application immediately
+        URG - Inform a receiving station that certain data within a segment is urgent and should be prioritized.
+
+23. signed URL (use Amazon S3 as example)
+    Amazon S3 = Amazon Simple Storage Service
+    Amazon CloudFront = a content delivery web service
+    CloudFront distribution = the delivery method CloudFront uses to distribute the content to the end user
+         two types of distribution:
+                (1)Web Distributions: distribute static content like images, PDF files, excel and word doc files.
+                                      These files can be distributed via HTTP or HTTPS.
+                (2)RTMP distributions: stream the media files via Adobe server. It allows an end user to begin playing a
+                                       media file before the file has finished downloading from a CloudFront edge location.
+    Signed URL: A signed URL includes additional information, for example, an expiration date and time,
+                that gives you more control over access to your content.
+    <1>specify one or more trusted signers, which are the AWS accounts that you want to have permission to create signed URLs.
+    <2>develop your application to determine whether a user should have access to your content
+       and to create signed URLs for the objects or parts of your application that you want to restrict access to.
+    <3>A user requests an object for which you want to require signed URLs.
+    <4>Your application verifies that the user is entitled to access the object: they've signed in,
+       they've paid for access to the content, or they've met some other requirement for access.
+    <5>Your application creates and returns a signed URL to the user.
+    <6>The signed URL allows the user to download or stream the content.
+       (This step is automatic: the user needs nothing additional to access the content.
+        For example: if a user is accessing the content in web browser, your application returns signed URL to the browser.
+        The browser immediately uses the signed URL to access the object in the CloudFront edge cache without any intervention
+        from the user.)
+     <7>CloudFront uses the public key to validate the signature and confirm that the URL hasn't been tampered with.
+        If the signature is invalid, the request is rejected.
+
+24. 非对称加密算法：RSA，DSA/DSS
+    对称加密算法：AES，RC4，3DES
+    HASH算法：MD5，SHA1，SHA256
+
+25. Message Digest (信息摘要)：
+        Message digest is a cryptographic hash function containing a string of digits created by a one-way hashing formula.
+        This term is also known as a hash value and sometimes as a checksum.
+        它是一个唯一对应一个消息或文本的固定长度的值，它由一个单向Hash加密函数对消息进行作用而产生.
+
+26. VIP = Virtual IP address
+    An IP address that doesn't correspond to an actual physical network interface. Uses for VIPs include network address translation (especially, one-to-many NAT), fault-tolerance, and mobility.
+
+27. What is Database Incarnation?
+
+    Database incarnation is effectively a new “version” of the database that happens when you reset the online redo logs using “alter database open resetlogs;”.
+    Database incarnation falls into following category Current, Parent, Ancestor and Sibling
+
+    i) Current Incarnation : The database incarnation in which the database is currently generating redo.
+    ii) Parent Incarnation : The database incarnation from which the current incarnation branched following an OPEN RESETLOGS operation.
+    iii) Ancestor Incarnation : The parent of the parent incarnation is an ancestor incarnation. Any parent of an ancestor incarnation is also an ancestor incarnation.
+    iv) Sibling Incarnation : Two incarnations that share a common ancestor are sibling incarnations if neither one is an ancestor of the other.
+
+28. SCN = System Change Number
+    the system change number (SCN) is Oracle's clock - every time we commit, the clock increments.
+    The SCN just marks a consistent point in time in the database.

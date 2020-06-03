@@ -1,0 +1,2 @@
+"/Library/Developer/CommandLineTools/usr/bin/ar" cr ../../lib/libutil.a  CMakeFiles/util.dir/ObjLoader.cpp.o CMakeFiles/util.dir/SampledPixel.cpp.o CMakeFiles/util.dir/ArrayOutput.cpp.o CMakeFiles/util.dir/Progressifier.cpp.o CMakeFiles/util.dir/RenderParams.cpp.o
+"/Library/Developer/CommandLineTools/usr/bin/ranlib" ../../lib/libutil.a

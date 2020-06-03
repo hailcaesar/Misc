@@ -1,0 +1,2 @@
+"/Library/Developer/CommandLineTools/usr/bin/ar" cr ../../lib/libmath.a  CMakeFiles/math.dir/Vec3.cpp.o CMakeFiles/math.dir/Ray.cpp.o CMakeFiles/math.dir/Hit.cpp.o CMakeFiles/math.dir/Camera.cpp.o CMakeFiles/math.dir/OrthoNormalBasis.cpp.o CMakeFiles/math.dir/ApproxVec3.cpp.o CMakeFiles/math.dir/Norm3.cpp.o CMakeFiles/math.dir/Samples.cpp.o
+"/Library/Developer/CommandLineTools/usr/bin/ranlib" ../../lib/libmath.a

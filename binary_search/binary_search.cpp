@@ -36,7 +36,7 @@ int binary_search_v2(const vector<int>& nums, int target){
     return res;
 }
 
-// First occurrence of target  [Similar to std::lower_bound]
+// First occurrence of target
 int binary_search_v3(const vector<int>& nums, int target){
     int l = 0, r = nums.size() - 1, m = -1;
     int res = -1;
@@ -75,6 +75,7 @@ int binary_search_v4(const vector<int>& nums, int target){
 }
 
 // Lowest k when A[k] > target [Similar to std::upper_bound]
+// IE. First first value > target
 // IE. Where it should be inserted, or one idx higher than target found
 int binary_search_v5(const vector<int>& nums, int target){
     int l = 0, r = nums.size() - 1, m = -1;
@@ -91,6 +92,69 @@ int binary_search_v5(const vector<int>& nums, int target){
         }
     }
     return res;
+}
+
+// Lowest k when A[k] >= target [Similar to std::lower_bound]
+// IE. First first value >= target
+int binary_search_v6(const vector<int>& nums, int target){
+    int l = 0, r = nums.size() - 1, m = -1;
+    int res = -1;
+
+    while (l <= r){
+        m = l + (r - l) / 2;
+        if (nums[m] >= target){
+            r = m - 1;
+            res = m;
+        }
+        else
+            l = m + 1;
+    }
+    return res;
+}
+
+// Binary serach on rotated array
+int binary_search_v7(const vector<int>& nums, int target){
+    int l = 0, r = nums.size() - 1, m = -1;
+    int res = -1;
+
+    while (l <= r){
+        m = l + (r - l) / 2;
+        if (nums[m] >= target){
+            r = m - 1;
+            res = m;
+        }
+        else
+            l = m + 1;
+    }
+    return res;
+}
+
+// Find minimum in rotated list
+//
+
+// Sqrt
+
+
+// Find Peak
+
+
+//
+//V2
+int find_peak(const vector<int>& nums){
+    int left = 0;
+    int right = nums.size() - 1;
+    int N =  nums.size();
+    while (left < right){
+        int mid = left + (right - left) / 2;
+        if(nums[mid] < nums[mid+1]){
+            left = mid + 1;         //mid cannot possibly be the peak
+        }
+        else{
+            right = mid;            //mid could be the peak but not sure!
+        }
+    }
+    assert(left == right);
+    return right;
 }
 
 
@@ -129,6 +193,8 @@ int main(){
     res = binary_search_v5(test2, -2); assert(res == 0);
     res = binary_search_v5(test3, -1); assert(res == 3);
 
+    vector<int> test4 = {-1,1,2,3,4,5,6,7,8,9,10,9};
+    res = find_peak(test4); assert(res == 10);
     cout << "Succeeded!!" << endl;
 
 }

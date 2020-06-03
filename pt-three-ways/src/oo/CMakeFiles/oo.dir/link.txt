@@ -1,0 +1,2 @@
+"/Library/Developer/CommandLineTools/usr/bin/ar" cr ../../lib/liboo.a  CMakeFiles/oo.dir/Primitive.cpp.o CMakeFiles/oo.dir/Scene.cpp.o CMakeFiles/oo.dir/Triangle.cpp.o CMakeFiles/oo.dir/Sphere.cpp.o CMakeFiles/oo.dir/Renderer.cpp.o CMakeFiles/oo.dir/SceneBuilder.cpp.o CMakeFiles/oo.dir/Material.cpp.o
+"/Library/Developer/CommandLineTools/usr/bin/ranlib" ../../lib/liboo.a

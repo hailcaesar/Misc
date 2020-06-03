@@ -1,0 +1,67 @@
+#include <vector>
+#include <iostream>
+using namespace std;
+
+
+void merge(vector<int>& nums, int left_start, int left_end, int right_end){
+    const int left_size = left_end - left_start + 1;
+    const int right_size = right_end - left_end;
+    const int mid = left_end;
+    std::vector<int> L(left_size, 0);
+    std::vector<int> R(right_size, 0);
+
+    for(int idx = 0; idx < left_size; idx++){
+        L[idx] = nums[idx + left_start];
+    }
+    for(int idx = 0; idx < right_size; idx++){
+        R[idx] = nums[idx + mid + 1];
+    }
+
+    int left = 0;
+    int right = 0;
+    int idx = left_start;
+    while(left <= left_end && right <= right_end){
+        if(L[left] < R[right]){
+            nums[idx] = L[left];
+            left++;
+        }
+        else{
+            nums[idx] = R[right];
+            right++;
+        }
+        idx++;
+    }
+
+    while(idx < left_size){ nums[idx] = L[left]; left++, idx++;};
+    while(idx < right_size){ nums[idx] = R[left]; right++, idx++;};
+}
+
+void helper(vector<int>& nums, int left, int right){
+    if (left == right){
+        return;
+    }
+
+    int mid = (right - left) / 2;
+
+    helper(nums, left, mid);
+    helper(nums, mid + 1,  right);
+
+    merge(nums, left,  mid, right);
+}
+
+
+void merge_sort(vector<int>& test){
+    helper(test, 0, test.size() - 1);
+}
+
+int main(){
+    vector<int> test = {80,10,-1,4,5,19,200,145,-5,45,11};
+    merge_sort(test);
+
+    for(auto& item : test){
+        cout << item << ", ";
+    }
+
+    cout << endl;
+
+}

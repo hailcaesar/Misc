@@ -1,0 +1,2 @@
+"/Library/Developer/CommandLineTools/usr/bin/ar" cr ../../lib/libfp.a  CMakeFiles/fp.dir/Render.cpp.o CMakeFiles/fp.dir/Triangle.cpp.o CMakeFiles/fp.dir/Sphere.cpp.o CMakeFiles/fp.dir/Scene.cpp.o CMakeFiles/fp.dir/SceneBuilder.cpp.o
+"/Library/Developer/CommandLineTools/usr/bin/ranlib" ../../lib/libfp.a
